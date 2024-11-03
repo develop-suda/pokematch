@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ポケモン検索結果</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Press Start 2P', cursive;
+        }
+    </style>
+</head>
+
+<body class="container mt-5">
+    <h1 class="mb-4">検索結果</h1>
+    {{ if .pokemons }}
+    {{ if gt (len .pokemons) 0 }}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">名前</th>
+                <th scope="col">身長 (m)</th>
+                <th scope="col">体重 (kg)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range .pokemons }}
+            <tr>
+                <td>{{ .Name }}</td>
+                <td>{{ .Height }}</td>
+                <td>{{ .Weight }}</td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+    {{ else }}
+    <div class="alert alert-warning" role="alert">
+        該当するポケモンが見つかりませんでした。
+    </div>
+    {{ end }}
+    {{ else }}
+    <div class="alert alert-warning" role="alert">
+        該当するポケモンが見つかりませんでした。
+    </div>
+    {{ end }}
+    <br>
+    <a href="/" class="btn btn-primary">戻る</a>
+</body>
+
+</html>

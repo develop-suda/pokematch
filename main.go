@@ -1,17 +1,26 @@
 package main
 
 import (
-	"net/http"
+	"pokematch/controllers"
+	"pokematch/infra"
+	"pokematch/repositories"
+	"pokematch/services"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	infra.Initialize()
+	db := infra.SetupDB()
+
+	pokemonRepository := repositories.NewPokemonRepository(db)
+	pokemonService := services.NewPokemonService(pokemonRepository)
+	pokemonController := controllers.NewPokemonController(pokemonService)
+
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
+	r.LoadHTMLGlob("templates/*")
+	r.GET("/", pokemonController.Index)
+	r.GET("/result", pokemonController.FindPokemon)
+
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

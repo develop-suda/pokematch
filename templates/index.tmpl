@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ポケマッチ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Press Start 2P', cursive;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">{{ .title }}</h1>
+        <p class="text-center">身長と体重を入力して、近しいポケモンを見つけましょう！</p>
+        <form id="searchForm">
+            <div class="form-group">
+                <label for="height">身長 (m)</label>
+                <input type="number" step="0.01" class="form-control" id="height" placeholder="身長を入力">
+            </div>
+            <div class="form-group">
+                <label for="weight">体重 (kg)</label>
+                <input type="number" step="0.01" class="form-control" id="weight" placeholder="体重を入力">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">検索</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const height = document.getElementById('height').value;
+            const weight = document.getElementById('weight').value;
+            window.location.href = `/result?height=${height}&weight=${weight}`;
+        });
+    </script>
+</body>
+
+</html>
