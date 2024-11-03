@@ -27,3 +27,5 @@ go.work.sum
 docker/
 .gitignore
 /tmp
+.DS_Store
+.vscode
