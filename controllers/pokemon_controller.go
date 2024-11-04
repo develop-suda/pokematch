@@ -1,9 +1,10 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
+	"pokematch/dto"
 	"pokematch/services"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,21 +25,27 @@ func (c *PokemonController) Index(ctx *gin.Context) {
 }
 
 func (c *PokemonController) FindPokemon(ctx *gin.Context) {
-	heightStr := ctx.Query("height")
-	weightStr := ctx.Query("weight")
 
-	height, err := strconv.ParseFloat(heightStr, 32)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Unexpected error"})
-		return
-	}
-	weight, err := strconv.ParseFloat(weightStr, 32)
-	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Unexpected error"})
+	// バリデーションチェック
+	var input dto.HeightWeightInput
+	if err := ctx.ShouldBindQuery(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid input",
+		})
+		fmt.Println(err)
 		return
 	}
 
-	pokemons, err := c.service.FindPokemon(float32(height), float32(weight))
+	// この実装だとパラメータが空でも通ってしまう
+	// コメントアウトしているものに変更すると空は通らなくなるが、その代わり普通の０が通らなくなる
+	// if input.Height == nil || input.Weight == nil || *input.Height == 0 || *input.Weight == 0 {
+	if input.Height == nil || input.Weight == nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Height and Weight are required"})
+		return
+	}
+
+	// ポケモンを取得
+	pokemons, err := c.service.FindPokemon(*input.Height, *input.Weight)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Unexpected error"})
 		return
