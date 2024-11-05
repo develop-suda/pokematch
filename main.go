@@ -21,6 +21,7 @@ func main() {
 	r.LoadHTMLGlob("templates/*")
 	r.GET("/", pokemonController.Index)
 	r.GET("/result", pokemonController.FindPokemon)
+	r.GET("/error", pokemonController.Err)
 
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

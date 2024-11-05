@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"errors"
 	"pokematch/models"
 
 	"gorm.io/gorm"
@@ -23,9 +22,6 @@ func (r *PokemonRepository) FindPokemon(minHeight float32, maxHeight float32, mi
 	var pokemons []models.Pokemon
 	result := r.db.Where("height BETWEEN ? AND ? and weight BETWEEN ? AND ?", minHeight, maxHeight, minWeight, maxWeight).Find(&pokemons)
 	if result.Error != nil {
-		if result.Error.Error() == "record not found" {
-			return nil, errors.New("Item not found")
-		}
 		return nil, result.Error
 	}
 	return &pokemons, nil
