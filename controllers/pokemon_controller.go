@@ -27,17 +27,13 @@ func (c *PokemonController) Index(ctx *gin.Context) {
 func (c *PokemonController) FindPokemon(ctx *gin.Context) {
 
 	// バリデーションチェック
-	// 空が入っていても何故か通る。。。
 	var input dto.HeightWeightInput
 	if err := ctx.ShouldBindQuery(&input); err != nil {
 		ctx.HTML(http.StatusBadRequest, "error.tmpl", gin.H{"error": "身長or体重のどちらかは空もしくは数字以外が入っています!!!"})
 		return
 	}
 
-	// この実装だとパラメータが空でも通ってしまう
-	// コメントアウトしているものに変更すると空は通らなくなるが、その代わり普通の０が通らなくなる
-	// if input.Height == nil || input.Weight == nil || *input.Height == 0 || *input.Weight == 0 {
-	if input.Height == nil || input.Weight == nil {
+	if input.Height == nil || input.Weight == nil || *input.Height == 0 || *input.Weight == 0 {
 		ctx.HTML(http.StatusBadRequest, "error.tmpl", gin.H{"error": "身長と体重は必須です"})
 		return
 	}
