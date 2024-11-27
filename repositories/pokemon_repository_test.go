@@ -36,6 +36,7 @@ func TestFindPokemon(t *testing.T) {
 		{1.0, 2.0, 80.0, 100.0, 1}, // Charizardのみ
 		{0.5, 1.0, 5.0, 10.0, 1},   // Bulbasaurのみ
 		{0.0, 2.0, 0.0, 100.0, 3},  // 全てのポケモン
+		{0.0, 0.0, 0.0, 0.0, 0},    // 該当なし
 	}
 
 	for _, test := range tests {
