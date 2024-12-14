@@ -11,11 +11,13 @@ func main() {
 	infra.Initialize()
 	db := infra.SetupDB()
 
+	// Pokemonテーブルを削除し再作成
 	db.Migrator().DropTable(&models.Pokemon{})
 	if err := db.AutoMigrate(&models.Pokemon{}); err != nil {
 		panic("Failed to migrate database")
 	}
 
+	// Pokemonテーブルにデータを投入
 	list := models.ReturnList()
 	result := db.Create(&list)
 
