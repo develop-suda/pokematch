@@ -4,6 +4,7 @@ import (
 	"pokematch/controllers"
 	"pokematch/infra"
 	"pokematch/initializer"
+	"pokematch/middlewares"
 	"pokematch/repositories"
 	"pokematch/services"
 
@@ -22,6 +23,9 @@ func main() {
 	pokemonController := controllers.NewPokemonController(pokemonService)
 
 	r := gin.Default()
+
+	r.Use(middlewares.LogMiddleware())
+
 	r.LoadHTMLGlob("templates/*")
 	r.GET("/", pokemonController.Index)
 	r.GET("/result", pokemonController.FindPokemon)
