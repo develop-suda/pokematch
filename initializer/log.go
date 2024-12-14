@@ -11,11 +11,13 @@ import (
 )
 
 func Log() {
-	// gin.logファイル作成
-	f, _ := os.Create("gin.log")
-	// gin.logファイルと標準出力にログを出力
-	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
-	log.Logger = log.Output(gin.DefaultWriter)
+	// gin.log,go.logファイル作成
+	ginf, _ := os.Create("gin.log")
+	gof, _ := os.Create("go.log")
+	// ginでのログをファイルと標準出力に出力
+	gin.DefaultWriter = io.MultiWriter(ginf, os.Stdout)
+	// zerologでのログをファイルと標準出力に出力
+	log.Logger = log.Output(io.MultiWriter(gof, os.Stdout))
 }
 
 func CreateLogger(c *gin.Context) *zerolog.Logger {
