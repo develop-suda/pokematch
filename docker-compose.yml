@@ -12,7 +12,7 @@ services:
   postgres:
     image: postgres:16-alpine
     container_name: '${POSTGRES_DATABASE}'
-    hostname: ${HOSTNAME}
+    hostname: ${HOST_NAME}
     ports:
       - 5432:5432
     volumes:
