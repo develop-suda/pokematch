@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 
+	"github.com/gin-contrib/requestid"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -24,6 +25,7 @@ func CreateLogger(c *gin.Context) *zerolog.Logger {
 	ctx := context.Background()
 	// configured-logger
 	logger := log.With().
+		Str("request_id", requestid.Get(c)).
 		Str("ip", c.ClientIP()).
 		Str("path", c.Request.URL.Path).
 		Str("method", c.Request.Method).

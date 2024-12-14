@@ -30,3 +30,4 @@ docker/
 .DS_Store
 .vscode
 gin.log
+go.log

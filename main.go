@@ -8,6 +8,7 @@ import (
 	"pokematch/repositories"
 	"pokematch/services"
 
+	"github.com/gin-contrib/requestid"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,6 +25,7 @@ func main() {
 
 	r := gin.Default()
 
+	r.Use(requestid.New())
 	r.Use(middlewares.LogMiddleware())
 
 	r.LoadHTMLGlob("templates/*")
