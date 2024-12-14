@@ -29,3 +29,4 @@ docker/
 /tmp
 .DS_Store
 .vscode
+gin.log

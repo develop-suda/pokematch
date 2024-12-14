@@ -3,6 +3,7 @@ package main
 import (
 	"pokematch/controllers"
 	"pokematch/infra"
+	"pokematch/initializer"
 	"pokematch/repositories"
 	"pokematch/services"
 
@@ -10,6 +11,9 @@ import (
 )
 
 func main() {
+	initializer.Init()
+	initializer.Log()
+
 	infra.Initialize()
 	db := infra.SetupDB()
 
