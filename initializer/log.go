@@ -11,6 +11,9 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// TODO: 日付ごとにログファイルを分ける
+// TODO: ログ用のフォルダを作成する
+// TODO: 各処理のログを出力する
 func Log() {
 	// gin.log,go.logファイル作成
 	ginf, _ := os.Create("gin.log")
