@@ -29,5 +29,5 @@ docker/
 /tmp
 .DS_Store
 .vscode
-gin.log
-go.log
+logs/gin/*
+logs/zerolog/*
