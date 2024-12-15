@@ -4,8 +4,7 @@ import (
 	"context"
 	"io"
 	"os"
-	"strconv"
-	"time"
+	"pokematch/public"
 
 	"github.com/gin-contrib/requestid"
 	"github.com/gin-gonic/gin"
@@ -14,6 +13,7 @@ import (
 )
 
 // TODO: 各処理のログを出力する
+// TODO: 日付を跨いで実行している場合、前日のファイルに書き込みをしてしまう
 func Log() {
 	// gin.log,go.logファイル作成
 	ginf, err := getLogFile("gin")
@@ -51,13 +51,8 @@ func CreateLogger(c *gin.Context) *zerolog.Logger {
 }
 
 func getLogFile(fileName string) (*os.File, error) {
-	t := time.Now()
 
-	y := strconv.Itoa(t.Year())
-	m := strconv.Itoa(int(t.Month()))
-	d := strconv.Itoa(t.Day())
-
-	yyyymmdd := y + m + d
+	yyyymmdd := public.FormatDate()
 
 	filePath := "logs/" + fileName + "/" + yyyymmdd + "_" + fileName + ".log"
 
