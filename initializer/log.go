@@ -16,19 +16,25 @@ import (
 // TODO: 日付を跨いで実行している場合、前日のファイルに書き込みをしてしまう
 func Log() {
 	// gin.log,go.logファイル作成
-	ginf, err := getLogFile("gin")
+	ginf, err := getLogFile("gin", "log")
 	if err != nil {
 		log.Error().Msg("error")
 	}
 
-	zerologf, err := getLogFile("zerolog")
+	zerologf, err := getLogFile("zerolog", "log")
 	if err != nil {
 		log.Error().Msg("error")
 	}
+
+	zerologjsonf, err := getLogFile("zerolog", "json")
+	if err != nil {
+		log.Error().Msg("error")
+	}
+
 	// ginでのログをファイルと標準出力に出力
 	gin.DefaultWriter = io.MultiWriter(ginf, os.Stdout)
 	// zerologでのログをファイルと標準出力に出力
-	log.Logger = log.Output(io.MultiWriter(zerologf, os.Stdout))
+	log.Logger = log.Output(io.MultiWriter(zerologf, zerologjsonf))
 }
 
 func CreateLogger(c *gin.Context) *zerolog.Logger {
@@ -50,11 +56,10 @@ func CreateLogger(c *gin.Context) *zerolog.Logger {
 	return newLogger
 }
 
-func getLogFile(fileName string) (*os.File, error) {
-
+func getLogFile(fileName string, extension string) (*os.File, error) {
 	yyyymmdd := public.FormatDate()
 
-	filePath := "logs/" + fileName + "/" + yyyymmdd + "_" + fileName + ".log"
+	filePath := "logs/" + fileName + "/" + yyyymmdd + "_" + fileName + "." + extension
 
 	// ファイルが存在しない場合　err != nil
 	// ファイルが存在する場合　　　　err = nil
