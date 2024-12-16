@@ -1,6 +1,7 @@
 package main
 
 import (
+	"net/http"
 	"pokematch/controllers"
 	"pokematch/infra"
 	"pokematch/initializer"
@@ -32,6 +33,10 @@ func main() {
 	r.GET("/", pokemonController.Index)
 	r.GET("/result", pokemonController.FindPokemon)
 	r.GET("/error", pokemonController.Err)
+
+	r.NoRoute(func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently, "/")
+	})
 
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

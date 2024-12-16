@@ -3,7 +3,6 @@ package controllers
 import (
 	"net/http"
 	"pokematch/dto"
-	"pokematch/initializer"
 	"pokematch/services"
 
 	"github.com/gin-gonic/gin"
@@ -27,9 +26,6 @@ func (c *PokemonController) Index(ctx *gin.Context) {
 
 func (c *PokemonController) FindPokemon(ctx *gin.Context) {
 
-	logger := initializer.CreateLogger(ctx)
-	logger.Info().Msg("execute FindPokemon")
-
 	// バリデーションチェック
 	var input dto.HeightWeightInput
 	if err := ctx.ShouldBindQuery(&input); err != nil {
@@ -52,6 +48,7 @@ func (c *PokemonController) FindPokemon(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "result.tmpl", gin.H{
 		"pokemons": pokemons,
 	})
+
 }
 
 func (c *PokemonController) Err(ctx *gin.Context) {

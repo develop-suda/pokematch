@@ -30,7 +30,6 @@ func Log() {
 	if err != nil {
 		log.Error().Msg("error")
 	}
-
 	// ginでのログをファイルと標準出力に出力
 	gin.DefaultWriter = io.MultiWriter(ginf, os.Stdout)
 	// zerologでのログをファイルと標準出力に出力
