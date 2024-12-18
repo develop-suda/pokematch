@@ -34,6 +34,8 @@ func Log() {
 	gin.DefaultWriter = io.MultiWriter(ginf, os.Stdout)
 	// zerologでのログをファイルと標準出力に出力
 	log.Logger = log.Output(io.MultiWriter(zerologf, zerologjsonf))
+
+	logstudy()
 }
 
 func CreateLogger(c *gin.Context) *zerolog.Logger {
@@ -76,4 +78,15 @@ func createLogFile(filePath string) (*os.File, error) {
 
 func openLogFile(filePath string) (*os.File, error) {
 	return os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+}
+
+func logstudy() {
+	log.Trace().Send()
+	log.Debug().Send()
+	log.Info().Send()
+	log.Warn().Send()
+	log.Error().Send()
+	// log.Fatal().Send()
+	// log.Panic().Send()
+	// log.Info().Send()
 }
