@@ -3,6 +3,7 @@ package initializer
 import (
 	"context"
 	"errors"
+	"io"
 	"os"
 	"pokematch/public"
 
@@ -13,49 +14,34 @@ import (
 	"github.com/rs/zerolog/pkgerrors"
 )
 
+var RequestID string
+
 // TODO: 各処理のログを出力する
 // TODO: 日付を跨いで実行している場合、前日のファイルに書き込みをしてしまう
 func Log() {
-	// gin.log,go.logファイル作成
-	// ginf, err := getLogFile("gin", "log")
-	// if err != nil {
-	// 	log.Error().Msg("error")
-	// }
+	// ginのログファイルを取得
+	ginf, err := getLogFile("gin", "log")
+	if err != nil {
+		log.Error().Msg("error")
+	}
 
-	// zerologf, err := getLogFile("zerolog", "log")
-	// if err != nil {
-	// 	log.Error().Msg("error")
-	// }
+	// zerologのログファイルを取得
+	zerologf, err := getLogFile("zerolog", "log")
+	if err != nil {
+		log.Error().Msg("error")
+	}
 
-	// zerologjsonf, err := getLogFile("zerolog", "json")
-	// if err != nil {
-	// 	log.Error().Msg("error")
-	// }
+	// zerologのJSON形式のログファイルを取得
+	zerologjsonf, err := getLogFile("zerolog", "json")
+	if err != nil {
+		log.Error().Msg("error")
+	}
 	// ginでのログをファイルと標準出力に出力
-	// gin.DefaultWriter = io.MultiWriter(ginf, os.Stdout)
+	gin.DefaultWriter = io.MultiWriter(ginf, os.Stdout)
 	// zerologでのログをファイルと標準出力に出力
-	// log.Logger = log.Output(io.MultiWriter(zerologf, zerologjsonf))
+	log.Logger = log.Output(io.MultiWriter(zerologf, zerologjsonf))
 
-	logstudy()
-}
-
-func CreateLogger(c *gin.Context) *zerolog.Logger {
-	ctx := context.Background()
-	// configured-logger
-	logger := log.With().
-		Str("request_id", requestid.Get(c)).
-		Str("ip", c.ClientIP()).
-		Str("path", c.Request.URL.Path).
-		Str("method", c.Request.Method).
-		Str("params", c.Request.URL.RawQuery).
-		Logger()
-
-	// context.Contextにロガーを登録
-	ctx = logger.WithContext(ctx)
-
-	// context.Contextに設定したロガーを取り出し
-	newLogger := zerolog.Ctx(ctx)
-	return newLogger
+	// logstudy()
 }
 
 func getLogFile(fileName string, extension string) (*os.File, error) {
@@ -79,6 +65,10 @@ func createLogFile(filePath string) (*os.File, error) {
 
 func openLogFile(filePath string) (*os.File, error) {
 	return os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+}
+
+func SetRequestID(c *gin.Context) {
+	RequestID = requestid.Get(c)
 }
 
 func logstudy() {

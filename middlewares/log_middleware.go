@@ -8,9 +8,10 @@ import (
 
 func LogMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		logger := initializer.CreateLogger(c)
-		logger.Info().Msg("request start")
+		initializer.SetRequestID(c)
+		logger := initializer.MiddlewareLogger(c)
+		logger.Info().Msg("REQUEST START")
 		c.Next()
-		logger.Info().Msg("request end")
+		logger.Info().Msg("REQUEST END")
 	}
 }

@@ -26,6 +26,7 @@ func main() {
 
 	r := gin.Default()
 
+	// リクエストIDの生成
 	r.Use(requestid.New())
 	r.Use(middlewares.LogMiddleware())
 
