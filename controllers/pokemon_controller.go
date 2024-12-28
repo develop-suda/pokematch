@@ -30,7 +30,7 @@ func (c *PokemonController) Index(ctx *gin.Context) {
 
 func (c *PokemonController) FindPokemon(ctx *gin.Context) {
 
-	c.logger.Info().Str("リクエストID", initializer.RequestID).Msg("FindPokemon実行")
+	c.logger.Info().Str("request_id", initializer.RequestID).Msg("FindPokemon実行")
 
 	// バリデーションチェック
 	var input dto.HeightWeightInput
@@ -61,7 +61,7 @@ func (c *PokemonController) FindPokemon(ctx *gin.Context) {
 	// ポケモンを取得
 	pokemons, err := c.service.FindPokemon(*input.Height, *input.Weight)
 	if err != nil {
-		c.logger.Error().Err(err).Str("リクエストID", initializer.RequestID).Send()
+		c.logger.Error().Err(err).Str("request_id", initializer.RequestID).Send()
 		ctx.HTML(http.StatusInternalServerError, "error.tmpl", gin.H{"error": "内部でエラーが発生しました。"})
 		return
 	}
