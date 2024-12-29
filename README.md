@@ -20,6 +20,7 @@ PokeMatchは、ユーザーが身長と体重を入力すると、近しいポ�
 - バリデーションチェック
 - リクエストごとのログ出力
 - Dockerでの開発
+- テーブル定義書、画面遷移図作成
 
 ## 次の目標
 [次回の開発リポジトリ（Giter）](https://github.com/develop-suda/Giter)
