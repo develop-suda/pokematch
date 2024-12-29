@@ -16,7 +16,6 @@ import (
 
 var RequestID string
 
-// TODO: 各処理のログを出力する
 // TODO: 日付を跨いで実行している場合、前日のファイルに書き込みをしてしまう
 func Log() {
 	// ginのログファイルを取得

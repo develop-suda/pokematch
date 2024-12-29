@@ -43,15 +43,15 @@ func (c *PokemonController) FindPokemon(ctx *gin.Context) {
 		var errMsg string
 		var resMsg string
 		switch {
+		case (input.Height == nil || *input.Height == 0) && (input.Weight == nil || *input.Weight == 0):
+			errMsg = "身長体重どちらとも0もしくは空"
+			resMsg = "身長と体重のどちらとも0もしくは空です。正しい値を入力してください。"
 		case input.Height == nil || *input.Height == 0:
 			errMsg = "身長が0もしくは空"
 			resMsg = "身長が0もしくは空です。正しい値を入力してください。"
 		case input.Weight == nil || *input.Weight == 0:
 			errMsg = "体重が0もしくは空"
 			resMsg = "体重が0もしくは空です。正しい値を入力してください。"
-		default:
-			errMsg = "身長体重どちらとも0もしくは空"
-			resMsg = "身長と体重のどちらとも0もしくは空です。正しい値を入力してください。"
 		}
 		c.logger.Error().Float32("Height", *input.Height).Float32("Weight", *input.Weight).Msg(errMsg)
 		ctx.HTML(http.StatusBadRequest, "error.tmpl", gin.H{"error": resMsg})
