@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ポケモン検索結果</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/x-icon;,">
     <style>
@@ -14,40 +14,40 @@
     </style>
 </head>
 
-<body class="container mt-5">
-    <h1 class="mb-4">検索結果</h1>
+<body class="container mx-auto mt-10">
+    <h1 class="text-3xl mb-6">検索結果</h1>
     {{ if .pokemons }}
     {{ if gt (len .pokemons) 0 }}
-    <table class="table table-striped">
+    <table class="table-auto w-full text-left border-collapse">
         <thead>
             <tr>
-                <th scope="col">名前</th>
-                <th scope="col">身長 (m)</th>
-                <th scope="col">体重 (kg)</th>
+                <th class="px-4 py-2 border-b">名前</th>
+                <th class="px-4 py-2 border-b">身長 (m)</th>
+                <th class="px-4 py-2 border-b">体重 (kg)</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="divide-y divide-gray-200">
             {{ range .pokemons }}
-            <tr>
-                <td>{{ .Name }}</td>
-                <td>{{ .Height }}</td>
-                <td>{{ .Weight }}</td>
+            <tr class="odd:bg-gray-100 even:bg-gray-200 hover:bg-gray-300">
+                <td class="px-4 py-2">{{ .Name }}</td>
+                <td class="px-4 py-2">{{ .Height }}</td>
+                <td class="px-4 py-2">{{ .Weight }}</td>
             </tr>
             {{ end }}
         </tbody>
     </table>
     {{ else }}
-    <div class="alert alert-warning" role="alert">
+    <div class="bg-yellow-500 text-white p-4 rounded-lg shadow-lg">
         該当するポケモンが見つかりませんでした。
     </div>
     {{ end }}
     {{ else }}
-    <div class="alert alert-warning" role="alert">
+    <div class="bg-yellow-500 text-white p-4 rounded-lg shadow-lg">
         該当するポケモンが見つかりませんでした。
     </div>
     {{ end }}
     <br>
-    <a href="/" class="btn btn-primary">戻る</a>
+    <a href="/" class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded">戻る</a>
 </body>
 
 </html>

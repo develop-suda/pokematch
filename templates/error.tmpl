@@ -4,16 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>エラー</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="icon" href="data:image/x-icon;,">
 </head>
 
-<body class="bg-light text-dark d-flex justify-content-center align-items-center" style="height: 100vh;">
+<body class="bg-gray-100 text-gray-900 flex justify-center items-center h-screen">
     <div class="container text-center">
-        <div class="alert alert-danger" role="alert">
-            <h1 class="alert-heading">エラーが発生しました</h1>
+        <div class="bg-red-500 text-white p-6 rounded-lg shadow-lg">
+            <h1 class="text-2xl font-bold mb-4">エラーが発生しました</h1>
             <p>{{.error}}</p>
-            <a href="/" class="btn btn-light mt-3">ホームに戻る</a>
+            <br>
+            <a href="/" class="btn btn-light mt-6 bg-white text-red-500 px-4 py-2 rounded">ホームに戻る</a>
         </div>
     </div>
 </body>
