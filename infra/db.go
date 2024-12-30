@@ -10,6 +10,7 @@ import (
 )
 
 func SetupDB() *gorm.DB {
+	// DSNをフォーマット
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Tokyo",
 		os.Getenv("HOST_NAME"),
@@ -24,10 +25,12 @@ func SetupDB() *gorm.DB {
 		err error
 	)
 
+	// データベースに接続
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
 
+	// エラーチェック
 	if err != nil {
 		panic("Failed to connect database")
 	}

@@ -43,6 +43,7 @@ func Log() {
 	// logstudy()
 }
 
+// ログファイルを取得する関数
 func getLogFile(fileName string, extension string) (*os.File, error) {
 	yyyymmdd := public.FormatDate()
 
@@ -58,14 +59,17 @@ func getLogFile(fileName string, extension string) (*os.File, error) {
 	}
 }
 
+// ログファイルを新規作成する関数
 func createLogFile(filePath string) (*os.File, error) {
 	return os.Create(filePath)
 }
 
+// 既存のログファイルを開く関数
 func openLogFile(filePath string) (*os.File, error) {
 	return os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 }
 
+// リクエストIDを設定する関数
 func SetRequestID(c *gin.Context) {
 	RequestID = requestid.Get(c)
 }
