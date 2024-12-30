@@ -2,12 +2,10 @@ package main
 
 import (
 	"net/http"
-	"pokematch/controllers"
+	"pokematch/di"
 	"pokematch/infra"
 	"pokematch/initializer"
 	"pokematch/middlewares"
-	"pokematch/repositories"
-	"pokematch/services"
 
 	"github.com/gin-contrib/requestid"
 	"github.com/gin-gonic/gin"
@@ -20,9 +18,7 @@ func main() {
 	infra.Initialize()
 	db := infra.SetupDB()
 
-	pokemonRepository := repositories.NewPokemonRepository(db)
-	pokemonService := services.NewPokemonService(pokemonRepository)
-	pokemonController := controllers.NewPokemonController(pokemonService)
+	pokemonController := di.InitializeRouter(db)
 
 	r := gin.Default()
 
